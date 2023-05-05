@@ -2,7 +2,6 @@
 
 ## 개와 고양이를 구분하는 CNN 구현
 ###  데이터 전처리
-<br>
 
 kaggle의 데이터셋 사용 [(kaggle)]( https://www.kaggle.com/datasets/tongpython/cat-and-dog)
 
@@ -15,21 +14,18 @@ training_set=zipfile.ZipFile('training_set.zip')
 test_set.extractall()
 training_set.extractall()
 ```
-<br>
 
 #### 전처리 시 생각해야할 점 
 
-<br>
 
 1. zipfile을이용하여 압축해제한 이미지들은 size가 고르지 않기에 ```cv2.resize()```를 이용하여 이미지의 크기를 일정하게 변경해야한다.
 
-2. 데이터셋의 이미지를 ```cv2.imread()```로 불러올 경우 ```(height, wide, 3)```의 3차원 넘파이 어레이로 반환한다. 3은 RGB값을 나타낸다. 만약 흑백으로 read할 경우는 1이 될 것이다. 또한 RGB의 값은 0~255의 값이므로, 활성화 함수를 사용할 경우 Vanishing Gradient 문제가 발생할 수 있으므로 /255를 하여 데이터를 0~1의 값으로 Scailing 해주어야 한다.
+2. 데이터셋의 이미지를 ```cv2.imread()```로 불러올 경우 ```(height, wide, 3)```의 3차원 넘파이 어레이로 반환한다. 3은 RGB값을 나타낸다. 만약 흑백으로 read할 경우는 1이 될 것이다. 또한 RGB의 값은 0 to 255의 값이므로, 활성화 함수를 사용할 경우 Vanishing Gradient 문제가 발생할 수 있으므로 /255를 하여 데이터를 0 to 1의 값으로 Scailing 해주어야 한다.
 
 3. 불러온 이미지의 정답표인 one-hot vector를 만들어줘야한다.
 
 4. return 값은 ```test_set```의 전처리된 이미지와 One-hot Vector와 ```train_set```의 전처리된 이미지와 One-hot Vector이다. 즉 1*4 list가 return될 것이다. 
 
-<br>
 
 #### 코드 구현
 ```python
@@ -129,16 +125,12 @@ history = model.fit(train_X, train_Y, epochs=100, validation_data=(test_X, test_
 2. output의 경우에도 두 가지에 대한 CNN이므로 마지막 ```layer.Dense(2, activation='~~~')```을 사용해야한다.
 3. ```model.compile()```에서 Loss Function은 분류기준이 두 가지이므로 binary_crossentropy를 사용했는데, 당연히 멀티클래스 문제에서 사용하는 categorical_crossentropy를 사용해도 잘 작동한다.
 
-<br>
-
 ### 모델 성능 분석
-<br>
 
-![acc](output_acc.png)<br><br>
+![acc](output_acc.png)<br>
 accuracy는 대략 30번째 epoch에서 1이 되었다. 아무래도 학습하기 쉬운 데이터셋이라서 빠르게 1이 된 것 같다.
 val_accuracy의 경우는 비슷한 epoch에서 0.8에 수렴하기 시작했다.<br>
-<br>
-![loss](output_loss.png)<br><br>
+![loss](output_loss.png)<br>
 loss는 20번째 epoch 근처에서 0에 수렴하게 되었으나, val_loss의 경우에는 계속해서 증가하는 것을 보니, Overfitting된 것 같다.
 
 ### 마무리
