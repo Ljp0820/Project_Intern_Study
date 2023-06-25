@@ -9,7 +9,7 @@ from GreatHoney
 ======
 ### 1.cartpole
 ### 2.Mountain Car
-### 3.Inverted Pendulum
+### 3.Pendulum
 
 3.UWAN
 ====
