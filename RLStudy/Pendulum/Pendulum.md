@@ -189,7 +189,12 @@ for i in range(5):
 ### Render
 ![image](Pendulum.gif)
 
-생각보다도 빠른 step 안에 성공하는 결과를 보였다.
+생각보다도 빠른 step 안에 성공하는 결과를 보였다. <br>
+실제로 성공한 이후에 그 상태를 잘 유지하는지 보기 위해 종료 조건에 성공한 후 40 Step을 더 진행하도록 변경해서 시행해보았다.
+
+![image](Pendulum_1.gif)
+
+아주 잘 유지한다!
 
 # 결론
 1. 처음에 Continuous한 Action으로 구현하지 못해서 바로 Discrete하게 Action을 나누는 방법은 한정된 시간 안에 성공하기 위한 좋은 선택이었다고 느낀다.
