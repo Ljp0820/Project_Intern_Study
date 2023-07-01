@@ -6,7 +6,6 @@ Inverted Pendulum
 3. Reward 함수를 보면 성공할 경우 0이 되는데, Discrete하므로 특정 값 이상이면 성공하는 방향으로 생각해보았다.
 4. Class 사용하기!!!!!
 # 본론
-## 
 
 처음으로 시행해본 코드에서는 ```termination==True```인 경우에 ```reward=1000```으로 시행해보았는데, 문제가 발생했었다.
 1. 임의로 Continuous한 Action space를 Discrete하게 변경해서 시행하니,  reward가 -0.01 이상으로 0에 가까운 값으로 출력되는 경우는 있었는데 정확히 0이 되는 경우가 없어 성공하지 못하는 결과를 출력했다.
