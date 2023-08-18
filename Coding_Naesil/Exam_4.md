@@ -175,3 +175,79 @@ int main(){
 ```
 결과 : Right Parentheses. Happy Study
 ```
+
+### 정답코드
+```cpp
+#include <iostream>
+using namespace std;
+
+int detect(string s, string* is_true, string* word){
+
+    int count = 0;
+    string conv_word;
+
+    for(auto elem : s){
+        if(elem == '('){
+            count += 1;
+        }else if(elem == ')'){
+            count -= 1;
+            if(count < 0){
+                *is_true = "Wrong Parentheses. ";
+                *word = "\n";
+                return 0;
+            }
+        }else{
+            *word+=elem;
+        }
+    }
+    if(count!=0){
+        *is_true = "Wrong Parentheses. ";
+        *word = "\n";
+        return 0;
+    }else{
+        *is_true = "Right Parentheses. ";
+        return 0;
+    }
+
+}
+
+int main(){
+
+    string str = "((((Happy Study))))", is_right, words;
+
+    detect(str, &is_right, &words);
+
+    cout<<is_right<<words<<endl;
+
+    return 0;
+}
+```
+```python
+def detect(s: str) -> (str, list):
+
+    is_true = ''
+    words = []
+    count = 0
+    for word in s:
+        if word == '(':
+            count += 1
+        elif word == ')':
+            count -= 1
+            if count < 0:
+                is_true = '괄호사용이 잘못되었습니다.'
+                words = []
+                return is_true, words
+        else:
+            words.append(word)
+    
+    if count != 0:
+        is_true = '괄호사용이 잘못되었습니다.'
+        words = []
+        return is_true, words
+    else:
+        is_true = '올바른 괄호 사용입니다.'
+        return is_true, words
+
+is_right, string = detect("(((Happy Study)))")
+print("{:s} {:s}".format(is_right, ''.join(string)))
+```
