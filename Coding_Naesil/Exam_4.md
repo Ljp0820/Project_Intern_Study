@@ -251,3 +251,109 @@ def detect(s: str) -> (str, list):
 is_right, string = detect("(((Happy Study)))")
 print("{:s} {:s}".format(is_right, ''.join(string)))
 ```
+
+#### 주사위 경우의 수
+``` python
+from itertools import product
+
+dice = [i for i in range(1, 7)]
+n = 3
+target = 14
+ans = []
+
+all_combi = product(dice, repeat = n)
+
+for combi in all_combi:
+    if sum(combi) == target:
+        ans.append(combi)
+
+print(ans)
+```
+#### 보드게임
+```python
+class Board_Game:
+
+    def __init__(self):
+        
+        self.table = [[1,0,0,0,0], [0,0,0,0,0], [0,0,5,-1,0], [-1,0,0,0,0], [0,0,0,0,10]]
+        self.before_state = [0, 0]
+        self.now_state = [0, 0]
+        self.ice = [2, 2]
+        self.target = [4, 4]
+        self.hole = [[3, 0], [2, 3]]
+
+    def get_act(self):
+
+        self.action, self.distance = map(int, input("Enter your action and distance").split())
+    
+    def move(self):
+
+        print(self.before_state, self.now_state)
+
+        if self.action == 1:
+            self.now_state[0] -= self.distance # up
+        elif self.action == 2:
+            self.now_state[0] += self.distance # down
+        elif self.action == 3:
+            self.now_state[1] -= self.distance # left
+        elif self.action == 4:
+            self.now_state[1] += self.distance # right
+
+        print(self.before_state, self.now_state)
+
+
+    def check_state(self):
+
+        if (self.now_state[1] > 4) + (self.now_state[1] < 0) + (self.now_state[0] > 4) + (self.now_state[0] < 0):
+            self.now_state[0] = self.before_state[0]
+            self.now_state[1] = self.before_state[1]
+            print("Wall")
+            return False
+        
+        if self.now_state == self.ice:
+            self.distance=1
+            print("Ice")
+            self.move()
+            self.table[self.before_state[0]][self.before_state[1]] = 0
+            self.table[self.now_state[0]][self.now_state[1]] = 0
+            self.table[self.ice[0]][self.ice[1]] = 5
+            self.check_state()
+            return True
+        
+        if self.now_state in self.hole:
+            self.now_state = [0,0]
+            self.before_state = [0,0]
+            print("Hole")
+            return True
+        
+        if self.now_state == self.target:
+            self.table[self.before_state[0]][self.before_state[1]] = 0
+            print("End")
+            return False
+
+        return True
+        
+    def update_table(self):
+        self.table[self.before_state[0]][self.before_state[1]] = 0
+        self.table[self.now_state[0]][self.now_state[1]] = 1
+        self.before_state[0] = self.now_state[0]
+        self.before_state[1] = self.now_state[1]
+
+    def print_table(self):
+        for list in self.table:
+            print(list)
+        print("----------------")
+
+game = Board_Game()
+flag = True
+game.print_table()
+
+while flag:
+
+    game.get_act()
+    print(game.action, game.distance)
+    game.move()
+    flag = game.check_state()
+    game.update_table()
+    game.print_table()
+```
