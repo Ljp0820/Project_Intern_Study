@@ -11,6 +11,3 @@ from GreatHoney
 ### 2.Mountain Car
 ### 3.Pendulum
 
-3.UWAN
-====
-### UWAN project with Reinforcement Learning
