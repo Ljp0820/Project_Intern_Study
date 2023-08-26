@@ -252,33 +252,53 @@ plt.show()
 import numpy as np
 import matplotlib.pyplot as plt
 
-lam = 5
+def poisson(lam, iter, time):
+
+    poisson_list = []
+    poisson_avg = []
+
+    for step in range(iter):
+        poisson_list.append(np.random.poisson(lam)*time)
+        poisson_avg.append(sum(poisson_list)/(step+1))
+
+    return poisson_avg
+        
+
+def exponential(lam, iter, time):
+    
+    exp_list = []
+    exp_avg = []
+
+    for step in range(iter):
+        init_time = 0
+        count = 0
+        while True:
+            exp_time = np.random.exponential(1/lam)
+            init_time += exp_time
+            if init_time > time:
+                break
+            else:
+                count+=1
+
+        exp_list.append(count)
+        exp_avg.append(sum(exp_list)/(step+1))
+
+    return exp_avg
+
+
+def draw_graph(exp_avg, poisson_avg):
+
+    plt.plot(exp_avg, label='Exponential')
+    plt.plot(poisson_avg, label='Poisson')
+    plt.axhline(25, color='red', linestyle='--', label='Average')
+    plt.legend()
+    plt.show()
+
+lamb = 5
 time = 5
 iter = 1000
-poisson_list = []
-exp_list = []
-exp_avg = []
-poisson_avg = []
 
-for step in range(1, iter+1):
-    count = 0
-    init_time = 0
-    poisson_list.append(5*np.random.poisson(lam))
-    while True:
-        exp_time = np.random.exponential(1/lam)
-        init_time += exp_time
-        if init_time < 5:
-            count += 1
-        else:
-            init_time -= exp_time
-            break
-    exp_list.append(count)
-    exp_avg.append(sum(exp_list)/step)
-    poisson_avg.append(sum(poisson_list)/step)
-
-plt.plot(exp_avg, label='Exponential')
-plt.plot(poisson_avg, label='Poisson')
-plt.axhline(25, color='red', linestyle='--', label='Average')
-plt.legend()
-plt.show()
+poi = poisson(lamb, iter, time)
+exp = exponential(lamb, iter, time)
+draw_graph(poi, exp)
 ```
