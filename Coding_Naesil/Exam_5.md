@@ -302,3 +302,69 @@ poi = poisson(lamb, iter, time)
 exp = exponential(lamb, iter, time)
 draw_graph(poi, exp)
 ```
+## 오목 정답코드
+```python
+black_stones = []
+white_stones = []
+
+# 오목에서 그림을 그리는 함수입니다.
+def draw_board():
+    print()
+    for y in range(15):
+        for x in range(15):
+            if [x, y] in black_stones:
+                print("●", end=" ")
+            elif [x, y] in white_stones:
+                print("○", end=" ")
+            else:
+                print("┼", end=" ")
+        print()
+    print()
+
+
+def check_five_in_a_row(stone, stones, direction):
+
+    ### 재귀함수 왜씀???? 반복문 돌리면 반복 횟수도 명확하고, 재귀 중지 조건도 필요 없는데???
+
+    streak=0
+    state = [stone[0], stone[1]]
+
+    for i in range(5):
+        state[0]+=direction[0]
+        state[1]+=direction[1]
+        if state in stones:
+            streak += 1
+        else:
+            return streak
+
+    return streak
+
+
+# 오목에서 승리여부를 확인하는 함수입니다.
+def check_win(stones):
+    last_stone = stones[-1]
+    directions = [(1, 0), (0, 1), (1, 1), (1, -1)]
+    for direction in directions:
+        opposite_direction = (-direction[0], -direction[1])
+        stone_streak = 1
+        stone_streak += check_five_in_a_row(last_stone, stones, direction)
+        stone_streak += check_five_in_a_row(last_stone, stones, opposite_direction)
+        if stone_streak >= 5:  # 설계 조건에 따라 5가 아닐 수 있음!
+            return True
+    return False
+
+# main
+draw_board()
+while True:
+    black_stones.append(list(map(int, input("검은 돌의 좌표를 입력하세요: ").split(","))))
+    draw_board()
+    if check_win(black_stones):
+        print("검은 돌이 이겼습니다!")
+        break
+    
+    white_stones.append(list(map(int, input("흰 돌의 좌표를 입력하세요: ").split(","))))
+    draw_board()
+    if check_win(white_stones):
+        print("흰 돌이 이겼습니다!")
+        break
+```
