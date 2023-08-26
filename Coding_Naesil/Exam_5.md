@@ -217,3 +217,68 @@ draw_graph(poi, exp)
 ```
 ### 결과
 ![image](output2.png)
+
+## 문제1 정답코드
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+
+### standard distribution
+std = np.random.standard_normal(10000)
+
+### exponential distribution
+exp = np.random.exponential(1, 10000)
+
+### poisson distribution
+poi = np.random.poisson(5, 10000)
+
+### uniform distribution
+uni = np.random.uniform(0, 10, 10000)
+
+plt.figure(figsize=(18,9))
+plt.subplot(2,2,1)
+plt.hist(std, bins=1000, histtype="step")
+plt.subplot(2,2,2)
+plt.hist(exp, bins=1000, histtype="step")
+plt.subplot(2,2,3)
+plt.hist(poi, bins=14)
+plt.subplot(2,2,4)
+plt.hist(uni, bins=1000, histtype="step")
+plt.show()
+```
+
+## 문제2 정답코드
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+
+lam = 5
+time = 5
+iter = 1000
+poisson_list = []
+exp_list = []
+exp_avg = []
+poisson_avg = []
+
+for step in range(1, iter+1):
+    count = 0
+    init_time = 0
+    poisson_list.append(5*np.random.poisson(lam))
+    while True:
+        exp_time = np.random.exponential(1/lam)
+        init_time += exp_time
+        if init_time < 5:
+            count += 1
+        else:
+            init_time -= exp_time
+            break
+    exp_list.append(count)
+    exp_avg.append(sum(exp_list)/step)
+    poisson_avg.append(sum(poisson_list)/step)
+
+plt.plot(exp_avg, label='Exponential')
+plt.plot(poisson_avg, label='Poisson')
+plt.axhline(25, color='red', linestyle='--', label='Average')
+plt.legend()
+plt.show()
+```
