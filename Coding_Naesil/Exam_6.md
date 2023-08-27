@@ -321,4 +321,5 @@ Guide Code는 위의 코드를 복사해서 사용하시면 될 거 같아요.<b
 이항분포에서 n = 1000, p = 0.5일 경우 사건의 평균 발생 횟수는 500입니다.<br>
 정규분포는 평균 n*p = 500, 표준편차 $\sqrt{npq}$ = $\sqrt{250}$ 을 따르는 분포에서 사건 발생 횟수를 추정하겠죠. 기댓값은 500입니다.<br>
 그러므로 두 분포의 평균 발생 횟수는 500에 수렴할것이라 기대를 하고 결과를 보니 500에 가깝게 수렴을 하네요!<br>
-![image](binary_normal.png)
+![image](https://github.com/Ljp0820/Project_Intern_Study/blob/777b86dcd8971ed5ed87fae8cb568087724a3255/Coding_Naesil/binary_normal.png)
+
