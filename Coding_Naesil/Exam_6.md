@@ -323,6 +323,55 @@ Guide Code는 위의 코드를 복사해서 사용하시면 될 거 같아요.<b
 그러므로 두 분포의 평균 발생 횟수는 500에 수렴할것이라 기대를 하고 결과를 보니 500에 가깝게 수렴을 하네요!<br>
 ![image](https://github.com/Ljp0820/Project_Intern_Study/blob/777b86dcd8971ed5ed87fae8cb568087724a3255/Coding_Naesil/binary_normal.png)
 
+```python
+### 이항분포와 정규분포
+### 이항분포를 n -> infinite하게 시행하면 정규분포에 수렴한다고 확률과 통계하면서 배웠었는데 진짜인가?
+### n = 1000, p = 0.5 일 경우 평균 500번 사건 발생
+### N(500, sqrt(250))을 따르는 사건 발생횟수 추출
+### B(1000, 0.5)를 따르는 사건 발생횟수 추정
+
+import numpy as np
+import math
+
+class Distribution(Verify_distribution):
+
+    def __init__(self):
+        super(Distribution, self).__init__()
+        self.binary_avg = []
+        self.normal_avg = []
+        self.n = 1000
+        self.p = 0.5
+        self.avg = self.n * self.p
+    
+    def binary(self):
+        
+        binary = []
+
+        for i in range(self.iter):                      ### self.iter = 1000 번 반복        
+            binary_p = 0                                ### 1회의 시행에서 이항분포를 따르는 사건의 발생 횟수 얻기 위해 0으로 초기화
+            for j in range(self.n):                     ### self.n = 1000번 반복
+                detecter = np.random.uniform(0,1)       ### 사건의 발생 여부를 알기 위해 0~1의 uniform distribution 난수 생성
+                if detecter >= self.p:                  ### p 이상일 경우 사건 발생 했으므로 binary_p += 1
+                    binary_p += 1                       
+            binary.append(binary_p)                     ### 1000번 반복하고, 총 발생횟수 binary list에 저장
+            self.binary_avg.append(sum(binary)/(i+1))   ### step 별 평균값 저장
+        
+        return self.binary_avg
+    
+    def normal(self):
+
+        normal = []                             ### normal 분포의 경우는 쉬운거 같아요~ 읽어보시면 이해 가능
+
+        for i in range(self.iter):
+            normal.append(np.random.normal(self.n*self.p, math.sqrt(self.n*self.p*(1-self.p))))         ### np.random.normal(mean, sigma)이므로 평균과 표준편차 계산
+            self.normal_avg.append(sum(normal)/(i+1))
+        
+        return self.normal_avg
+    
+verify_1 = Distribution()
+verify_1.draw_graph(verify_1.binary(), verify_1.normal())
+```
+
 ## 문제풀이
 ```python
 ### 주어진 클래스 형식을 따르면서 class 구현도 좋지만,
