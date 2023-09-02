@@ -323,3 +323,115 @@ Guide Code는 위의 코드를 복사해서 사용하시면 될 거 같아요.<b
 그러므로 두 분포의 평균 발생 횟수는 500에 수렴할것이라 기대를 하고 결과를 보니 500에 가깝게 수렴을 하네요!<br>
 ![image](https://github.com/Ljp0820/Project_Intern_Study/blob/777b86dcd8971ed5ed87fae8cb568087724a3255/Coding_Naesil/binary_normal.png)
 
+## 문제풀이
+```python
+### 주어진 클래스 형식을 따르면서 class 구현도 좋지만,
+### 본인이 어떻게 클래스의 요소들을 만들어내는지 고민하는거도 중요하고 생각해서 형식과 다르게 만들어 봄
+### 입력 변수 하나만 추가하면 계산하는 메서드를 하나로 통합 가능하다고 생각해서
+### print는 한줄로 깔쌈하게
+
+class Complex:
+
+    def __init__(self, r, j):
+
+        self.real = r
+        self.complex = j
+
+    def conj(self):
+
+        self.complex = -1*self.complex
+        self.print_output()
+    
+    def calc_complex(self, a, b, calc):
+
+        if calc == 1:
+            self.real += a
+            self.complex += b
+        elif calc == 2:
+            self.real -= a
+            self.complex -= b
+        elif calc == 3:
+            self.real = (self.real*a) - (self.complex*b)
+            self.complex = (self.real*b) + (self.complex*a)
+        elif calc == 4:
+            self.real = ((self.real*a) - (self.complex*b))/(a**2 + b**2)
+            self.complex = ((self.real*b) + (self.complex*a))/(a**2 + b**2)
+        
+        self.print_output()
+
+    def print_output(self):
+
+        print("[" + str(self.real) + (" + " if self.complex > 0 else ' - ') + "j" + str(abs(self.complex)) + "]")
+    
+comp = Complex(10, -10)
+comp.conj()
+for i in range(1, 5):
+    comp.calc_complex(10, 15, i)
+    comp = Complex(10, -10)
+```
+
+```python
+### 가이드 코드 보고, 객체를 두 개 만드는게 맘에 안들어서 은행이라는 단일 클래스에 여러 계정을 만들 수 있게 코드 구성
+### 이름을 입력 받으면 creat_account에서 random하게 id를 생성하고, 그 id를 바탕으로 account 생성 (dict)
+### 이름을 입력받고 그 이름을 바탕으로 생성된 id를 사용하여 account에 접근, 이름과 id dict은 private하게 관리
+### 나머지 기능은 뭐 그대로...
+import random
+
+class Bank:
+    
+    def __init__(self):
+
+        self.account = {}
+        self.__private = {}
+
+    def creat_account(self, name):
+
+        userid = round(random.uniform(1000, 9999))
+        
+        while True:
+            if userid in self.__private.values():
+                userid = round(random.uniform(1000, 9999))
+            else:
+                break
+
+        self.account[userid] = 0
+        self.__private[name] = userid
+    
+    def deposit(self, name, money):
+
+        userid = self.__private[name]
+        self.account[userid] += money
+
+    def withdraw(self, name, money):
+
+        userid = self.__private[name]
+        self.account[userid] -= money
+        if self.account[userid] < 0 :
+            self.account[userid] += money
+            print("잔액이 부족합니다.")
+    
+    def show_balance(self, name):
+
+        userid = self.__private[name]
+        print("{:s}님의 잔액은 {:d}원 입니다.".format(name, self.account[userid]))
+
+bank = Bank()
+
+bank.creat_account("이재필")
+bank.creat_account("최용진")
+
+bank.show_balance("이재필")
+bank.show_balance("최용진")
+
+bank.deposit("이재필", 10000)
+bank.deposit("최용진", 10000)
+
+bank.show_balance("이재필")
+bank.show_balance("최용진")
+
+bank.withdraw("이재필", 100000)
+bank.withdraw("최용진", 1000)
+
+bank.show_balance("이재필")
+bank.show_balance("최용진")
+```
