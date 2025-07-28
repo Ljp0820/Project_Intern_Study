@@ -29,7 +29,7 @@ plt.title('Predictive Maintenance Dataset Correlation Heatmap')
 plt.tight_layout()
 plt.show()
 ```
-![Result of Correlation analysis][이미지 주소]<br>
+![Result](https://github.com/Ljp0820/Project_Intern_Study/blob/main/PredictiveMaintenace/ai4i2020_correlation_heatmap.png)<br>
 결과를 보면, Machine failure와 상관 관계가 높은 데이터는 딱히 보이지 않음을 알 수 있다.<br>
 높은 상관 계수를 보이는 데이터가 없다는 것이 모델이 예측을 잘할 수 없다를 의미하지는 않는다. 상관계수는 변수들 간의 선형 관계만 고려하는 지표이기에 U 자형과 같은 비선형 관계를 보여줄 수 없다.<br>
 
