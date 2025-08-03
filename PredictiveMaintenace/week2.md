@@ -195,7 +195,7 @@ param_grid = {
 결과적으로는 기본으로 사용했던 파라미터 셋이 가장 최적의 결과였다.<br>
 정확도를 높이기 위해 임계값을 조정해보기로 했다. 기본으로는 고장일 확률이 0.5 이상인 경우 고장으로 예측하기로 했는데, 이를 높혀 정확도를 높이고자 했다. 임계값을 0.5부터 0.9까지 0.1씩 키우며 결과를 관측해보기로 했다.<br>
 
-![Result]()
+![Result](https://github.com/Ljp0820/Project_Intern_Study/blob/main/PredictiveMaintenace/threshold_comparison.png)
 
 결과를 보면, 일단은 SMOTE가 SMOTEENN보다 더 좋은 성능을 일관적으로 보인다. 임계값은 0.5에서 0.7 사이가 가장 좋은 결과를 보인다.<br>
 그러나 고장인 경우의 f1 점수가 0.6을 넘지 못하는 여전히 아쉬운 성능을 보인다. 이를 해결 하기 위해 feature engineering을 사용해보기로 했다.
@@ -249,7 +249,7 @@ plt.title('Correlation Heatmap After Feature Engineering')
 plt.tight_layout()
 plt.savefig('heatmap_after_feature_engineering.png')
 ```
-![FeatureEngineering]()
+![FeatureEngineering](https://github.com/Ljp0820/Project_Intern_Study/blob/main/PredictiveMaintenace/heatmap_after_feature_engineering.png)
 
 데이터 셋 설명을 바탕으로 ```Power```, ```Temp_Diff```, ```Overstrain``` 항목을 새로 생성해 상관계수 분석을 진행했다.<br>
 선형적인 상관 관계는 딱히 보이지 않는다. 대부분이 0.1-0.2 정도 사이에 머물러 있음을 알 수 있다.<br>
@@ -363,7 +363,7 @@ plt.tight_layout(rect=[0, 0.03, 1, 0.95])
 plt.savefig('final_threshold_comparison.png')
 print("\n> 최종 성능 비교 그래프가 'final_threshold_comparison.png'로 저장되었습니다.")
 ```
-![FeatureEngineeringResult]()
+![FeatureEngineeringResult](https://github.com/Ljp0820/Project_Intern_Study/blob/main/PredictiveMaintenace/final_threshold_comparison.png)
 
 결과를 보면, 여전히 SMOTE를 사용한 경우가 SMOTEENN을 사용한 경우에 비해 좋은 결과를 보인다. SMOTE에서 임계값 0.5, 0.6 정도에서 가장 좋은 성능을 보임을 알 수 있다.
 ```
@@ -378,4 +378,5 @@ print("\n> 최종 성능 비교 그래프가 'final_threshold_comparison.png'로
 weighted avg       0.98      0.98      0.98      2000
 ```
 0.6에서 고장인 경우 정확도 0.73, 재현율 0.81으로 이전에 비해 아주 우수한 성능을 보인다. 그러나 아직 모델이 완벽하게 예측한다고 말하기에는 다소 부족한 수치이다.<br>
+
 다음주에는 더 좋은 방법이라고 하는 XGboost를 사용할 경우 성능이 더 좋은지 확인해보기로 했다.
